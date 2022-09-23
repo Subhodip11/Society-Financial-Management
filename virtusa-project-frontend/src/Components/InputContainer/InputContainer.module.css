@@ -1,0 +1,16 @@
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0.2rem;
+}
+
+.inputContainer input {
+    margin-top: 0.2rem;
+    padding: 0.5rem;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    color: white;
+    border-radius: 0.4rem;
+    background-color: black;
+}

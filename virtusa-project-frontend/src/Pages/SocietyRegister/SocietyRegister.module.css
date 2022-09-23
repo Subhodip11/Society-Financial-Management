@@ -1,0 +1,61 @@
+.status {
+    text-align: center;
+    width: 100%;
+    padding: 0.5rem;
+    background-color: rgba(71, 190, 71, 0.6);
+    color: black;
+    font-weight: bold;
+    border-radius: 0.5rem;
+}
+
+.parentLoginContainer {
+    background-color: black;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.loginContainer {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-40%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+    color: white;
+}
+
+.header {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.6rem;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    background-color: rgb(38, 34, 34);
+}
+
+.loginBtn {
+    margin-top: 0.5rem;
+    background-color: rgb(48, 48, 215);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    outline: none;
+    padding: 0.5rem 0.3rem;
+    width: 80%;
+    align-self: center;
+}
+
+.errorContainer {
+    color: red;
+    font-weight: 100;
+    font-size: 0.9rem;
+    padding: 0.15rem 0;
+}
