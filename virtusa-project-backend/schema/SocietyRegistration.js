@@ -15,7 +15,7 @@ const registrationSchema = new mongoose.Schema({
         required: true,
         length: 6
     }
-})
+}, { timestamps: true })
 
 const model = mongoose.model('Registration', registrationSchema);
 

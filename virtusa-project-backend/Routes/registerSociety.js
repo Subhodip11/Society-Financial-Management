@@ -2,7 +2,7 @@ const app = require('express').Router();
 const registrationModel = require('../schema/SocietyRegistration');
 const sequenceSchema = require('../schema/SequenceUpdater');
 
-app.get('/socities', (req, res) => {
+app.get('/societies', (req, res) => {
     registrationModel.find({}).then(data => {
         res.json({ data })
     }).catch(err => console.log(err));

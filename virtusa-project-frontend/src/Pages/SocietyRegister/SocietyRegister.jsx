@@ -4,6 +4,7 @@ import InputContainer from "../../Components/InputContainer/InputContainer";
 import { useFormik } from "formik";
 import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
+import Message from "../../Components/MessageContainer/Message";
 
 const initialValues = {
   societyName: "",
@@ -50,12 +51,7 @@ const SocietyRegister = () => {
   return (
     <div className={styles.parentLoginContainer}>
       <div className={styles.loginContainer}>
-        {status || checkRegistration ? (
-          <div className={styles.status}>
-            {status ? "Successfully Registered" : null}
-            {checkRegistration ? "Unable to Register (Network Error)" : null}
-          </div>
-        ) : null}
+        <Message status={status} checkRegistration={checkRegistration} />
         <div className={styles.header}>
           <span>Regsiter Society</span>
         </div>
