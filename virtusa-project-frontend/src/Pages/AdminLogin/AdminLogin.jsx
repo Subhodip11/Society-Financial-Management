@@ -1,15 +1,20 @@
-import React from "react";
+import { React, useEffect, useState } from "react";
 import InputContainer from "../../Components/InputContainer/InputContainer";
 import { useFormik } from "formik";
+import axios from "axios";
 import styles from "./AdminLogin.module.css";
 import { validateOnChangeHandler } from "../../schemas/adminLogin";
+import { useNavigate } from "react-router-dom";
 
 const initialValues = {
   username: "",
   password: "",
 };
 
-const AdminLogin = () => {
+const AdminLogin = ({ cookie }) => {
+  const navigate = useNavigate();
+  const [status, setStatus] = useState(false);
+
   const {
     errors,
     touched,
@@ -23,14 +28,35 @@ const AdminLogin = () => {
     validationSchema: validateOnChangeHandler,
     onSubmit: (values) => {
       // console.log(values);
+      axios
+        .post("http://localhost:1221/loginAdmin", values)
+        .then((response) => {
+          const authentic = response.data.isAuthenticated;
+          console.log(response.data);
+          if (authentic) {
+            cookie.set("isAuthenticated", authentic, { path: "/" });
+            cookie.set("jwt", response.data.token, { path: "/" });
+            navigate("/adminDashboard");
+          } else setStatus(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       handleReset();
     },
   });
-  console.log(errors, touched);
-
+  // console.log(errors, touched);
+  useEffect(() => {
+    setTimeout(() => {
+      setStatus(false);
+    }, 3000);
+  }, [status]);
   return (
     <div className={styles.parentLoginContainer}>
       <div className={styles.loginContainer}>
+        {status && (
+          <div className={styles.errorMessage}>Incorrect Credentials</div>
+        )}
         <div className={styles.header}>
           <span>Login</span>
         </div>

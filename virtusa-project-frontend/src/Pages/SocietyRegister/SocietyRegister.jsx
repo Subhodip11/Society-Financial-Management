@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
 import Message from "../../Components/MessageContainer/Message";
+import { Navigate } from "react-router-dom";
 
 const initialValues = {
   societyName: "",
@@ -12,7 +13,7 @@ const initialValues = {
   pincode: "",
 };
 
-const SocietyRegister = () => {
+const SocietyRegister = ({ cookie }) => {
   const [status, setStatus] = useState(false);
   const [checkRegistration, setCheckRegistration] = useState(false);
   const {
@@ -29,18 +30,33 @@ const SocietyRegister = () => {
     onSubmit: (values) => {
       console.log(values);
       axios
-        .post("http://localhost:1221/registerSociety", values)
+        .post("http://localhost:1221/registerSociety", values, {
+          headers: {
+            authorization: cookie.get("jwt"),
+          },
+        })
         .then((response) => {
           console.log(response);
-          setStatus(true);
+          const authentic = response.data.isAuthenticated;
+          if (authentic) {
+            cookie.set("isAuthenticated", authentic, {
+              path: "/",
+            });
+            setStatus(true);
+          } else {
+            cookie.remove("isAuthenticated");
+          }
         })
         .catch((err) => {
           console.log(err);
+          cookie.remove("isAuthenticated");
+          cookie.remove("jwt");
           checkRegistration(true);
         });
       handleReset();
     },
   });
+
   useEffect(() => {
     setTimeout(() => {
       setStatus(false);
@@ -48,60 +64,66 @@ const SocietyRegister = () => {
     }, 5000);
   }, [status]);
 
-  return (
-    <div className={styles.parentLoginContainer}>
-      <div className={styles.loginContainer}>
-        <Message status={status} checkRegistration={checkRegistration} />
-        <div className={styles.header}>
-          <span>Regsiter Society</span>
+  if (cookie.get("isAuthenticated") === "false") {
+    return <Navigate replace to="/loginAdmin" />;
+  } else if (cookie.get("isAuthenticated") === "true") {
+    return (
+      <div className={styles.parentLoginContainer}>
+        <div className={styles.loginContainer}>
+          <Message status={status} checkRegistration={checkRegistration} />
+          <div className={styles.header}>
+            <span>Regsiter Society</span>
+          </div>
+          <form className={styles.fields} onSubmit={handleSubmit}>
+            <InputContainer
+              name={"societyName"}
+              labelName={"Society Name"}
+              inputContainerName={"Enter name"}
+              fieldName={values.societyName}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <div style={{ height: "1.5rem" }}>
+              {errors.societyName && touched.societyName ? (
+                <div className={styles.errorContainer}>
+                  {errors.societyName}
+                </div>
+              ) : null}
+            </div>
+            <InputContainer
+              name={"city"}
+              labelName={"City"}
+              inputContainerName={"Enter city"}
+              fieldName={values.city}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <div style={{ height: "1.5rem" }}>
+              {errors.city && touched.city ? (
+                <div className={styles.errorContainer}>{errors.city}</div>
+              ) : null}
+            </div>
+            <InputContainer
+              name={"pincode"}
+              labelName={"Pincode"}
+              inputContainerName={"Enter pincode"}
+              fieldName={values.pincode}
+              handleChange={handleChange}
+              handleBlur={handleBlur}
+            />
+            <div style={{ height: "1.5rem" }}>
+              {errors.pincode && touched.pincode ? (
+                <div className={styles.errorContainer}>{errors.pincode}</div>
+              ) : null}
+            </div>
+            <button className={styles.loginBtn} type="submit">
+              Register
+            </button>
+          </form>
         </div>
-        <form className={styles.fields} onSubmit={handleSubmit}>
-          <InputContainer
-            name={"societyName"}
-            labelName={"Society Name"}
-            inputContainerName={"Enter name"}
-            fieldName={values.societyName}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-          />
-          <div style={{ height: "1.5rem" }}>
-            {errors.societyName && touched.societyName ? (
-              <div className={styles.errorContainer}>{errors.societyName}</div>
-            ) : null}
-          </div>
-          <InputContainer
-            name={"city"}
-            labelName={"City"}
-            inputContainerName={"Enter city"}
-            fieldName={values.city}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-          />
-          <div style={{ height: "1.5rem" }}>
-            {errors.city && touched.city ? (
-              <div className={styles.errorContainer}>{errors.city}</div>
-            ) : null}
-          </div>
-          <InputContainer
-            name={"pincode"}
-            labelName={"Pincode"}
-            inputContainerName={"Enter pincode"}
-            fieldName={values.pincode}
-            handleChange={handleChange}
-            handleBlur={handleBlur}
-          />
-          <div style={{ height: "1.5rem" }}>
-            {errors.pincode && touched.pincode ? (
-              <div className={styles.errorContainer}>{errors.pincode}</div>
-            ) : null}
-          </div>
-          <button className={styles.loginBtn} type="submit">
-            Register
-          </button>
-        </form>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default SocietyRegister;
