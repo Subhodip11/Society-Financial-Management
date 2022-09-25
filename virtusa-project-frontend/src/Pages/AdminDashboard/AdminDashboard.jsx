@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AdminDashboard.module.css";
 import axios from "axios";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const AdminDashboard = ({ cookie }) => {
+  const navigate = useNavigate();
   const [societyData, setSocietyData] = useState([]);
 
   useEffect(() => {
@@ -20,7 +21,10 @@ const AdminDashboard = ({ cookie }) => {
           cookie.set("isAuthenticated", authentic, {
             path: "/",
           });
-        else cookie.remove("isAuthenticated");
+        else {
+          cookie.remove("isAuthenticated");
+          navigate("/loginAdmin");
+        }
         // console.log(response.data);
       })
       .catch((err) => {

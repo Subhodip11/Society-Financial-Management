@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
-
+const sequenceUpdater = require('./SequenceUpdater.js')
 
 const registrationSchema = new mongoose.Schema({
+    societyID: {
+        type: Number,
+        required: true,
+        unique: true
+    },
     societyName: {
         type: String,
         required: true,
@@ -18,5 +23,6 @@ const registrationSchema = new mongoose.Schema({
 }, { timestamps: true })
 
 const model = mongoose.model('Registration', registrationSchema);
+
 
 module.exports = model;

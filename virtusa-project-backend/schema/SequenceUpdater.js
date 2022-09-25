@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const sequenceSchema = new mongoose.Schema({
-    id: {
-        type: String
+    _id: {
+        type: String,
+        default: "autoInc"
     },
     counter: {
         type: Number,

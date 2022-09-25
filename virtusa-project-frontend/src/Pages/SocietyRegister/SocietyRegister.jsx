@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
 import Message from "../../Components/MessageContainer/Message";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const initialValues = {
   societyName: "",
@@ -14,6 +14,7 @@ const initialValues = {
 };
 
 const SocietyRegister = ({ cookie }) => {
+  const navigate = useNavigate();
   const [status, setStatus] = useState(false);
   const [checkRegistration, setCheckRegistration] = useState(false);
   const {
@@ -45,6 +46,7 @@ const SocietyRegister = ({ cookie }) => {
             setStatus(true);
           } else {
             cookie.remove("isAuthenticated");
+            navigate("/loginAdmin");
           }
         })
         .catch((err) => {
