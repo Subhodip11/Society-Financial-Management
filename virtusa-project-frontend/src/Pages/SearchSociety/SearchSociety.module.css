@@ -1,0 +1,41 @@
+.searchContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.searchContainer .inputSearch {
+    margin: 0.3rem 0.5rem;
+}
+
+.inputSearch input {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid grey;
+    outline: none;
+    border-top-left-radius: 0.3rem;
+    border-bottom-left-radius: 0.3rem;
+}
+
+.inputSearch button {
+    border: none;
+    outline: none;
+    background-color: rgb(25, 190, 25);
+    color: white;
+    border-top-right-radius: 0.3rem;
+    border-bottom-right-radius: 0.3rem;
+    cursor: pointer;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+}
+
+.filterContainer {
+    margin: 0.4rem 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.filterContainer label {
+    margin-right: 0.5rem;
+}

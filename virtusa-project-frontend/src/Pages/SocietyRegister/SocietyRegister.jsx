@@ -6,7 +6,7 @@ import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
 import Message from "../../Components/MessageContainer/Message";
 import { Navigate, useNavigate } from "react-router-dom";
-import Logout from "../../Components/Logout/Logout";
+import Header from "../../Components/Header/Header";
 
 const initialValues = {
   societyName: "",
@@ -76,61 +76,63 @@ const SocietyRegister = ({ cookie }) => {
   } else if (cookie.get("isAuthenticated") === "true") {
     return (
       <div className={styles.parentLoginContainer}>
-        <div className={styles.loginContainer}>
-          <Message status={status} checkRegistration={checkRegistration} />
-          <div className={styles.header}>
-            <Logout cookie={cookie} />
-            <span>Regsiter Society</span>
+        <Header cookie={cookie} />
+        <div className={styles.Wrapper}>
+          <div className={styles.loginContainer}>
+            <Message status={status} checkRegistration={checkRegistration} />
+            <div className={styles.header}>
+              <span>Regsiter Society</span>
+            </div>
+            <form className={styles.fields} onSubmit={handleSubmit}>
+              <InputContainer
+                type={"text"}
+                name={"societyName"}
+                labelName={"Society Name"}
+                inputContainerName={"Enter name"}
+                fieldName={values.societyName}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.societyName && touched.societyName ? (
+                  <div className={styles.errorContainer}>
+                    {errors.societyName}
+                  </div>
+                ) : null}
+              </div>
+              <InputContainer
+                type={"text"}
+                name={"city"}
+                labelName={"City"}
+                inputContainerName={"Enter city"}
+                fieldName={values.city}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.city && touched.city ? (
+                  <div className={styles.errorContainer}>{errors.city}</div>
+                ) : null}
+              </div>
+              <InputContainer
+                type={"text"}
+                name={"pincode"}
+                labelName={"Pincode"}
+                inputContainerName={"Enter pincode"}
+                fieldName={values.pincode}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.pincode && touched.pincode ? (
+                  <div className={styles.errorContainer}>{errors.pincode}</div>
+                ) : null}
+              </div>
+              <button className={styles.loginBtn} type="submit">
+                Register
+              </button>
+            </form>
           </div>
-          <form className={styles.fields} onSubmit={handleSubmit}>
-            <InputContainer
-              type={"text"}
-              name={"societyName"}
-              labelName={"Society Name"}
-              inputContainerName={"Enter name"}
-              fieldName={values.societyName}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.societyName && touched.societyName ? (
-                <div className={styles.errorContainer}>
-                  {errors.societyName}
-                </div>
-              ) : null}
-            </div>
-            <InputContainer
-              type={"text"}
-              name={"city"}
-              labelName={"City"}
-              inputContainerName={"Enter city"}
-              fieldName={values.city}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.city && touched.city ? (
-                <div className={styles.errorContainer}>{errors.city}</div>
-              ) : null}
-            </div>
-            <InputContainer
-              type={"text"}
-              name={"pincode"}
-              labelName={"Pincode"}
-              inputContainerName={"Enter pincode"}
-              fieldName={values.pincode}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.pincode && touched.pincode ? (
-                <div className={styles.errorContainer}>{errors.pincode}</div>
-              ) : null}
-            </div>
-            <button className={styles.loginBtn} type="submit">
-              Register
-            </button>
-          </form>
         </div>
       </div>
     );

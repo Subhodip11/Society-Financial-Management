@@ -6,6 +6,7 @@ import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "universal-cookie";
 import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
+import SearchSociety from "./Pages/SearchSociety/SearchSociety";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -48,6 +49,18 @@ function App() {
             <SocietyUpdate
               cookie={cookie}
               initialValuesForUpdateSociety={initialValuesForUpdateSociety}
+              setInitialValuesForUpdateSociety={
+                setInitialValuesForUpdateSociety
+              }
+            />
+          }
+        />
+
+        <Route
+          path="/searchSociety"
+          element={
+            <SearchSociety
+              cookie={cookie}
               setInitialValuesForUpdateSociety={
                 setInitialValuesForUpdateSociety
               }

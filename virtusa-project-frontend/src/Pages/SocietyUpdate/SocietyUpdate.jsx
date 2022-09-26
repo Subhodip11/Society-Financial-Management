@@ -6,6 +6,7 @@ import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 import Logout from "../../Components/Logout/Logout";
+import Header from "../../Components/Header/Header";
 
 const SocietyUpdate = ({
   cookie,
@@ -74,73 +75,75 @@ const SocietyUpdate = ({
   } else if (cookie.get("isAuthenticated") === "true") {
     return (
       <div className={styles.parentLoginContainer}>
-        <div className={styles.loginContainer}>
-          {status !== "" ? (
-            <div
-              className={styles.errorMessage}
-              style={{
-                backgroundColor:
-                  status === "Successfully Updated..."
-                    ? "rgba(241, 56, 56, 0.7)"
-                    : "rgba(71, 190, 71, 0.6)",
-              }}
-            >
-              {status}
+        <Header cookie={cookie} />
+        <div className={styles.Wrapper}>
+          <div className={styles.loginContainer}>
+            {status !== "" ? (
+              <div
+                className={styles.errorMessage}
+                style={{
+                  backgroundColor:
+                    status === "Successfully Updated..."
+                      ? "rgba(241, 56, 56, 0.7)"
+                      : "rgba(71, 190, 71, 0.6)",
+                }}
+              >
+                {status}
+              </div>
+            ) : null}
+            <div className={styles.header}>
+              <span>Update Society Details</span>
             </div>
-          ) : null}
-          <div className={styles.header}>
-            <Logout cookie={cookie} />
-            <span>Update Society Details</span>
+            <form className={styles.fields} onSubmit={handleSubmit}>
+              <InputContainer
+                type={"text"}
+                name={"societyName"}
+                labelName={"Update Society Name"}
+                inputContainerName={"Enter updated name"}
+                fieldName={values.societyName}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.societyName && touched.societyName ? (
+                  <div className={styles.errorContainer}>
+                    {errors.societyName}
+                  </div>
+                ) : null}
+              </div>
+              <InputContainer
+                type={"text"}
+                name={"city"}
+                labelName={"Update City"}
+                inputContainerName={"Enter updated city name"}
+                fieldName={values.city}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.city && touched.city ? (
+                  <div className={styles.errorContainer}>{errors.city}</div>
+                ) : null}
+              </div>
+              <InputContainer
+                type={"text"}
+                name={"pincode"}
+                labelName={"Update Pincode"}
+                inputContainerName={"Enter updated pincode"}
+                fieldName={values.pincode}
+                handleChange={handleChange}
+                handleBlur={handleBlur}
+              />
+              <div style={{ height: "1.5rem" }}>
+                {errors.pincode && touched.pincode ? (
+                  <div className={styles.errorContainer}>{errors.pincode}</div>
+                ) : null}
+              </div>
+              <button className={styles.updateBtn} type="submit">
+                Update
+              </button>
+            </form>
           </div>
-          <form className={styles.fields} onSubmit={handleSubmit}>
-            <InputContainer
-              type={"text"}
-              name={"societyName"}
-              labelName={"Update Society Name"}
-              inputContainerName={"Enter updated name"}
-              fieldName={values.societyName}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.societyName && touched.societyName ? (
-                <div className={styles.errorContainer}>
-                  {errors.societyName}
-                </div>
-              ) : null}
-            </div>
-            <InputContainer
-              type={"text"}
-              name={"city"}
-              labelName={"Update City"}
-              inputContainerName={"Enter updated city name"}
-              fieldName={values.city}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.city && touched.city ? (
-                <div className={styles.errorContainer}>{errors.city}</div>
-              ) : null}
-            </div>
-            <InputContainer
-              type={"text"}
-              name={"pincode"}
-              labelName={"Update Pincode"}
-              inputContainerName={"Enter updated pincode"}
-              fieldName={values.pincode}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-            />
-            <div style={{ height: "1.5rem" }}>
-              {errors.pincode && touched.pincode ? (
-                <div className={styles.errorContainer}>{errors.pincode}</div>
-              ) : null}
-            </div>
-            <button className={styles.updateBtn} type="submit">
-              Update
-            </button>
-          </form>
         </div>
       </div>
     );

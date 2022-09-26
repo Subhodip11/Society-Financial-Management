@@ -2,7 +2,6 @@ const router = require('express').Router();
 const verifier = require('../middlewares/tokenVerifier');
 const registrationModel = require('../schema/SocietyRegistration');
 
-
 router.post("/searchSociety", verifier, (req, res) => {
     const { option, searchVal } = req.body;
     console.log(searchVal, option)

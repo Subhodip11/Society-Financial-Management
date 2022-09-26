@@ -1,0 +1,13 @@
+.headerContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    background-color: rgb(20, 20, 20);
+    padding: 0 1rem;
+}
+
+.headerContainer h3 {
+    cursor: pointer;
+}
