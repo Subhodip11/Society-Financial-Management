@@ -1,61 +1,59 @@
-import { React, useEffect, useState } from "react";
-import styles from "./SocietyRegister.module.css";
+import React, { useEffect, useState } from "react";
+import styles from "./SocietyUpdate.module.css";
 import InputContainer from "../../Components/InputContainer/InputContainer";
 import { useFormik } from "formik";
 import { validateOnChange } from "../../schemas/societyRegister";
 import axios from "axios";
-import Message from "../../Components/MessageContainer/Message";
 import { Navigate, useNavigate } from "react-router-dom";
 import Logout from "../../Components/Logout/Logout";
 
-const initialValues = {
-  societyName: "",
-  city: "",
-  pincode: "",
-};
-
-const SocietyRegister = ({ cookie }) => {
+const SocietyUpdate = ({
+  cookie,
+  initialValuesForUpdateSociety,
+  setInitialValuesForUpdateSociety,
+}) => {
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
-  const [checkRegistration, setCheckRegistration] = useState(false);
+  const initialValues = {
+    societyName: initialValuesForUpdateSociety.societyName,
+    city: initialValuesForUpdateSociety.city,
+    pincode: initialValuesForUpdateSociety.pincode,
+  };
+  const [status, setStatus] = useState("");
   const {
     values,
-    errors,
-    touched,
-    handleSubmit,
     handleChange,
     handleBlur,
+    errors,
     handleReset,
+    handleSubmit,
+    touched,
   } = useFormik({
     initialValues: initialValues,
     validationSchema: validateOnChange,
     onSubmit: (values) => {
       console.log(values);
+
       axios
-        .post("http://localhost:1221/registerSociety", values, {
-          headers: {
-            authorization: cookie.get("jwt"),
-          },
-        })
-        .then((response) => {
-          console.log(response);
-          const authentic = response.data.isAuthenticated;
-          if (authentic) {
-            cookie.set("isAuthenticated", authentic, {
-              path: "/",
-            });
-            setStatus(true);
-          } else {
-            cookie.remove("isAuthenticated");
-            cookie.remove("jwt");
-            navigate("/loginAdmin");
+        .post(
+          "http://localhost:1221/updateSociety",
+          { societyID: initialValuesForUpdateSociety.societyID, ...values },
+          {
+            headers: {
+              authorization: cookie.get("jwt"),
+            },
           }
+        )
+        .then((response) => {
+          console.log("response", response.data);
+          cookie.set("isAuthenticated", response.data.isAuthenticated, {
+            path: "/",
+          });
+          setStatus(response.data.data);
         })
         .catch((err) => {
-          console.log(err);
-          cookie.remove("isAuthenticated");
+          console.log("Error occured in update Society", err.message);
           cookie.remove("jwt");
-          checkRegistration(true);
+          cookie.remove("isAuthenticated");
         });
       handleReset();
     },
@@ -63,9 +61,9 @@ const SocietyRegister = ({ cookie }) => {
 
   useEffect(() => {
     setTimeout(() => {
-      setStatus(false);
-      setCheckRegistration(false);
-    }, 5000);
+      if (status === "Successfully updated...") navigate("/adminDashboard");
+      setStatus("");
+    }, 2000);
   }, [status]);
 
   if (
@@ -77,16 +75,28 @@ const SocietyRegister = ({ cookie }) => {
     return (
       <div className={styles.parentLoginContainer}>
         <div className={styles.loginContainer}>
-          <Message status={status} checkRegistration={checkRegistration} />
+          {status !== "" ? (
+            <div
+              className={styles.errorMessage}
+              style={{
+                backgroundColor:
+                  status === "Successfully Updated..."
+                    ? "rgba(241, 56, 56, 0.7)"
+                    : "rgba(71, 190, 71, 0.6)",
+              }}
+            >
+              {status}
+            </div>
+          ) : null}
           <div className={styles.header}>
             <Logout cookie={cookie} />
-            <span>Regsiter Society</span>
+            <span>Update Society Details</span>
           </div>
           <form className={styles.fields} onSubmit={handleSubmit}>
             <InputContainer
               name={"societyName"}
-              labelName={"Society Name"}
-              inputContainerName={"Enter name"}
+              labelName={"Update Society Name"}
+              inputContainerName={"Enter updated name"}
               fieldName={values.societyName}
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -100,8 +110,8 @@ const SocietyRegister = ({ cookie }) => {
             </div>
             <InputContainer
               name={"city"}
-              labelName={"City"}
-              inputContainerName={"Enter city"}
+              labelName={"Update City"}
+              inputContainerName={"Enter updated city name"}
               fieldName={values.city}
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -113,8 +123,8 @@ const SocietyRegister = ({ cookie }) => {
             </div>
             <InputContainer
               name={"pincode"}
-              labelName={"Pincode"}
-              inputContainerName={"Enter pincode"}
+              labelName={"Update Pincode"}
+              inputContainerName={"Enter updated pincode"}
               fieldName={values.pincode}
               handleChange={handleChange}
               handleBlur={handleBlur}
@@ -124,8 +134,8 @@ const SocietyRegister = ({ cookie }) => {
                 <div className={styles.errorContainer}>{errors.pincode}</div>
               ) : null}
             </div>
-            <button className={styles.loginBtn} type="submit">
-              Register
+            <button className={styles.updateBtn} type="submit">
+              Update
             </button>
           </form>
         </div>
@@ -134,4 +144,4 @@ const SocietyRegister = ({ cookie }) => {
   }
 };
 
-export default SocietyRegister;
+export default SocietyUpdate;

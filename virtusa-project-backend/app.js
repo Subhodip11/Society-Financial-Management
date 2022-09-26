@@ -12,6 +12,7 @@ app.use(express.json());
 app.use(cors());
 app.use(require('./Routes/loginAdmin'))
 app.use(require('./Routes/registerSociety'))
+app.use(require("./Routes/updateSociety"))
 app.use(require('./Routes/logoutAdmin'))
 
 app.listen(1221, () => console.log("Server started at port 1221..."))

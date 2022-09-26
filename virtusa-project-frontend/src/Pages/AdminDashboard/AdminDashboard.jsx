@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import styles from "./AdminDashboard.module.css";
 import axios from "axios";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import Logout from "../../Components/Logout/Logout";
+import SocietyDetailsContainer from "../../Components/SocietyDetialsConatainer/SocietyDetailsContainer";
 
-const AdminDashboard = ({ cookie }) => {
+const AdminDashboard = ({
+  cookie,
+  initialValuesForUpdateSociety,
+  setInitialValuesForUpdateSociety,
+}) => {
   const navigate = useNavigate();
   const [societyData, setSocietyData] = useState([]);
 
@@ -23,6 +29,7 @@ const AdminDashboard = ({ cookie }) => {
           });
         else {
           cookie.remove("isAuthenticated");
+          cookie.remove("jwt");
           navigate("/loginAdmin");
         }
         // console.log(response.data);
@@ -35,7 +42,10 @@ const AdminDashboard = ({ cookie }) => {
   }, []);
 
   // console.log(typeof cookie.get("isAuthenticated"));
-  if (cookie.get("isAuthenticated") === "false") {
+  if (
+    cookie.get("isAuthenticated") === "false" ||
+    cookie.get("isAuthenticated") === undefined
+  ) {
     return <Navigate replace to="/loginAdmin" />;
   } else if (cookie.get("isAuthenticated") === "true") {
     return (
@@ -54,6 +64,7 @@ const AdminDashboard = ({ cookie }) => {
           <div className={styles.navbar}>
             <div className={styles.addSociety}>
               <Link to="/registerSociety">Add Society</Link>
+              <Logout cookie={cookie} />
             </div>
           </div>
         </header>
@@ -61,20 +72,13 @@ const AdminDashboard = ({ cookie }) => {
           {societyData &&
             societyData.map((ele, index) => {
               return (
-                <section key={index} className={styles.societyDetailsContainer}>
-                  <div className={styles.detailsContainer}>
-                    <div className={styles.societyName}>
-                      Society Name :- {ele.societyName}
-                    </div>
-                    <div className={styles.city}>City :- {ele.city}</div>
-                    <div className={styles.pincode}>
-                      Pincode :- {ele.pincode}
-                    </div>
-                  </div>
-                  <div className={styles.updateSocietyBtn}>
-                    <button className={styles.updateBtn}>Update Society</button>
-                  </div>
-                </section>
+                <SocietyDetailsContainer
+                  index={index}
+                  ele={ele}
+                  setInitialValuesForUpdateSociety={
+                    setInitialValuesForUpdateSociety
+                  }
+                />
               );
             })}
         </main>

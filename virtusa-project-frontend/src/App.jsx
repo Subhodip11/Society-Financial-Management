@@ -1,17 +1,24 @@
 import "./App.css";
+import { useState } from "react";
 import AdminLogin from "./Pages/AdminLogin/AdminLogin";
 import SocietyRegister from "./Pages/SocietyRegister/SocietyRegister";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
 import Cookies from "universal-cookie";
+import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
 
+//initialize cookies for storing tokens
 const cookie = new Cookies();
 
 function App() {
-  //set cookies for storing tokens
+  const [initialValuesForUpdateSociety, setInitialValuesForUpdateSociety] =
+    useState({
+      societyID: "",
+      societyName: "",
+      city: "",
+      pincode: "",
+    });
 
-  // console.log(isAuthenticated);
   return (
     <Router>
       <Routes>
@@ -24,7 +31,28 @@ function App() {
 
         <Route
           path="/adminDashboard"
-          element={<AdminDashboard cookie={cookie} />}
+          element={
+            <AdminDashboard
+              cookie={cookie}
+              initialValuesForUpdateSociety={initialValuesForUpdateSociety}
+              setInitialValuesForUpdateSociety={
+                setInitialValuesForUpdateSociety
+              }
+            />
+          }
+        />
+
+        <Route
+          path="/updateSociety"
+          element={
+            <SocietyUpdate
+              cookie={cookie}
+              initialValuesForUpdateSociety={initialValuesForUpdateSociety}
+              setInitialValuesForUpdateSociety={
+                setInitialValuesForUpdateSociety
+              }
+            />
+          }
         />
       </Routes>
     </Router>
