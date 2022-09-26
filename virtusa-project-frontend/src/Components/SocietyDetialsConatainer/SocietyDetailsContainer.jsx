@@ -2,11 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./SocietyDetailsContainer.module.css";
 
-const SocietyDetailsContainer = ({
-  ele,
-  index,
-  setInitialValuesForUpdateSociety,
-}) => {
+const SocietyDetailsContainer = ({ ele, setInitialValuesForUpdateSociety }) => {
   const navigate = useNavigate();
 
   const handleUpdate = (e, societyData) => {
@@ -14,7 +10,7 @@ const SocietyDetailsContainer = ({
     navigate("/updateSociety");
   };
   return (
-    <section key={index} className={styles.societyDetailsContainer}>
+    <section className={styles.societyDetailsContainer}>
       <div className={styles.detailsContainer}>
         <div className={styles.societyID}>SocietyID :- {ele.societyID}</div>
         <div className={styles.societyName}>

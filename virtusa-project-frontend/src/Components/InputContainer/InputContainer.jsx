@@ -5,7 +5,7 @@ const InputContainer = (props) => {
     <div className={styles.inputContainer}>
       <label htmlFor="password">{props.labelName}</label>
       <input
-        type="text"
+        type={props.type}
         id={styles["password"]}
         name={props.name}
         placeholder={props.inputContainerName}

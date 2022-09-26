@@ -84,6 +84,7 @@ const SocietyRegister = ({ cookie }) => {
           </div>
           <form className={styles.fields} onSubmit={handleSubmit}>
             <InputContainer
+              type={"text"}
               name={"societyName"}
               labelName={"Society Name"}
               inputContainerName={"Enter name"}
@@ -99,6 +100,7 @@ const SocietyRegister = ({ cookie }) => {
               ) : null}
             </div>
             <InputContainer
+              type={"text"}
               name={"city"}
               labelName={"City"}
               inputContainerName={"Enter city"}
@@ -112,6 +114,7 @@ const SocietyRegister = ({ cookie }) => {
               ) : null}
             </div>
             <InputContainer
+              type={"text"}
               name={"pincode"}
               labelName={"Pincode"}
               inputContainerName={"Enter pincode"}

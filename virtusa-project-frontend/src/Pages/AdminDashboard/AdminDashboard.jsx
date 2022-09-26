@@ -12,6 +12,32 @@ const AdminDashboard = ({
 }) => {
   const navigate = useNavigate();
   const [societyData, setSocietyData] = useState([]);
+  const [searchedDoc, setSearchedDoc] = useState([]);
+
+  const handleSearchSociety = async (e) => {
+    let getOption = document.getElementById("filter").value;
+    let searchVal = document.getElementById("searchInputContainer").value;
+    console.log(getOption);
+    axios
+      .post(
+        "http://localhost:1221/searchSociety",
+        { option: getOption, searchVal: searchVal },
+        {
+          headers: {
+            authorization: cookie.get("jwt"),
+          },
+        }
+      )
+      .then((response) => {
+        setSearchedDoc(response.data.data);
+        cookie.set("isAuthenticated", response.data.isAuthenticated);
+        console.log(response.data.data);
+      })
+      .catch((err) => {
+        cookie.remove("jwt");
+        cookie.remove("isAuthenticated");
+      });
+  };
 
   useEffect(() => {
     axios
@@ -53,13 +79,35 @@ const AdminDashboard = ({
         <header className={styles.header}>
           <h3>SOCIETY FINANCIAL MANAGEMENT - ADMIN PORTAL</h3>
           <div className={styles.searchSociety}>
-            <input type="text" placeholder="Search Society" />
-            <button type="submit">Search</button>
+            <input
+              type="text"
+              placeholder="Search Society"
+              id="searchInputContainer"
+            />
+            <button type="submit" onClick={handleSearchSociety}>
+              Search
+            </button>
             <select name="" id="filter">
-              <option value="0">Filter</option>
-              <option value="1">Search By Society ID</option>
-              <option value="2">Search By Society Name</option>
+              <option value="1_1">Search by society ID</option>
+              <option value="2_1">Search by society name</option>
+              <option value="3_1">Search societies city wise</option>
+              <option value="4_1">Search societies pincode wise</option>
             </select>
+            {searchedDoc !== "No results found!" && searchedDoc ? (
+              searchedDoc.map((ele, index) => {
+                return (
+                  <SocietyDetailsContainer
+                    key={index}
+                    ele={ele}
+                    setInitialValuesForUpdateSociety={
+                      setInitialValuesForUpdateSociety
+                    }
+                  />
+                );
+              })
+            ) : (
+              <h3>No results found</h3>
+            )}
           </div>
           <div className={styles.navbar}>
             <div className={styles.addSociety}>
@@ -73,7 +121,7 @@ const AdminDashboard = ({
             societyData.map((ele, index) => {
               return (
                 <SocietyDetailsContainer
-                  index={index}
+                  key={index}
                   ele={ele}
                   setInitialValuesForUpdateSociety={
                     setInitialValuesForUpdateSociety

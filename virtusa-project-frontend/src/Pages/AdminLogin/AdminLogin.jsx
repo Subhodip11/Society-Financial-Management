@@ -62,6 +62,7 @@ const AdminLogin = ({ cookie }) => {
         </div>
         <form className={styles.fields} onSubmit={handleSubmit}>
           <InputContainer
+            type="password"
             name={"username"}
             labelName={"Username"}
             inputContainerName={"Enter username"}
@@ -75,6 +76,7 @@ const AdminLogin = ({ cookie }) => {
             ) : null}
           </div>
           <InputContainer
+            type={"password"}
             name={"password"}
             labelName={"Password"}
             inputContainerName={"Enter password"}

@@ -94,6 +94,7 @@ const SocietyUpdate = ({
           </div>
           <form className={styles.fields} onSubmit={handleSubmit}>
             <InputContainer
+              type={"text"}
               name={"societyName"}
               labelName={"Update Society Name"}
               inputContainerName={"Enter updated name"}
@@ -109,6 +110,7 @@ const SocietyUpdate = ({
               ) : null}
             </div>
             <InputContainer
+              type={"text"}
               name={"city"}
               labelName={"Update City"}
               inputContainerName={"Enter updated city name"}
@@ -122,6 +124,7 @@ const SocietyUpdate = ({
               ) : null}
             </div>
             <InputContainer
+              type={"text"}
               name={"pincode"}
               labelName={"Update Pincode"}
               inputContainerName={"Enter updated pincode"}
