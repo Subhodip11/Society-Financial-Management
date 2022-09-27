@@ -15,8 +15,7 @@ const verifier = (req, res, next) => {
         });
 
     } else {
-        req.authenticate = false;
-        res.json({ isAuthenticated: false, token: null })
+        return res.json({ isAuthenticated: false, token: null })
     }
 }
 

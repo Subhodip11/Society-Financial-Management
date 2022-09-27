@@ -12,14 +12,24 @@ const SocietyDetailsContainer = ({ ele, setInitialValuesForUpdateSociety }) => {
   return (
     <section className={styles.societyDetailsContainer}>
       <div className={styles.detailsContainer}>
-        <div className={styles.societyID}>SocietyID :- {ele.societyID}</div>
-        <div className={styles.societyName}>
-          Society Name :- {ele.societyName}
+        <div className={styles.tags}>
+          <div className={styles.innerLabel}>SocietyID &#8594;</div>
+          <span className={styles.innerText}>{ele.societyID}</span>
         </div>
-        <div className={styles.city}>City :- {ele.city}</div>
-        <div className={styles.pincode}>Pincode :- {ele.pincode}</div>
+        <div className={styles.tags}>
+          <div className={styles.innerLabel}>Society Name &#8594;</div>
+          <span className={styles.innerText}>{ele.societyName}</span>
+        </div>
+        <div className={styles.tags}>
+          <div className={styles.innerLabel}>City &#8594;</div>
+          <span className={styles.innerText}>{ele.city}</span>
+        </div>
+        <div className={styles.tags}>
+          <div className={styles.innerLabel}>Pincode &#8594;</div>
+          <span className={styles.innerText}>{ele.pincode}</span>
+        </div>
       </div>
-      <div className={styles.updateSocietyBtn}>
+      <div className={styles.updateBtnContainer}>
         <button
           className={styles.updateBtn}
           onClick={(e) => {

@@ -14,31 +14,35 @@ const AdminDashboard = ({
   const [societyData, setSocietyData] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:1221/societies", {
-        headers: {
-          authorization: cookie.get("jwt"),
-        },
-      })
-      .then((response) => {
-        setSocietyData(response.data.data);
-        const authentic = response.data.isAuthenticated;
-        if (authentic)
-          cookie.set("isAuthenticated", authentic, {
-            path: "/",
-          });
-        else {
+    if (
+      cookie.get("isAuthenticated") !== undefined ||
+      cookie.get("isAuthenticated") !== "false"
+    )
+      axios
+        .get("http://localhost:1221/societies", {
+          headers: {
+            authorization: cookie.get("jwt"),
+          },
+        })
+        .then((response) => {
+          setSocietyData(response.data.data);
+          const authentic = response.data.isAuthenticated;
+          if (authentic)
+            cookie.set("isAuthenticated", authentic, {
+              path: "/",
+            });
+          else {
+            cookie.remove("isAuthenticated");
+            cookie.remove("jwt");
+            navigate("/loginAdmin");
+          }
+          // console.log(response.data);
+        })
+        .catch((err) => {
           cookie.remove("isAuthenticated");
           cookie.remove("jwt");
-          navigate("/loginAdmin");
-        }
-        // console.log(response.data);
-      })
-      .catch((err) => {
-        cookie.remove("isAuthenticated");
-        cookie.remove("jwt");
-        console.log(err.message);
-      });
+          console.log(err.message);
+        });
   }, []);
 
   // console.log(typeof cookie.get("isAuthenticated"));

@@ -5,7 +5,8 @@ const registrationSchema = new mongoose.Schema({
     societyID: {
         type: Number,
         required: true,
-        unique: true
+        unique: true,
+
     },
     societyName: {
         type: String,
