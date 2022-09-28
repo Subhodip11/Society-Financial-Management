@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Cookies from "universal-cookie";
 import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
 import SearchSociety from "./Pages/SearchSociety/SearchSociety";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -27,44 +28,54 @@ function App() {
 
         <Route
           path="/registerSociety"
-          element={<SocietyRegister cookie={cookie} />}
+          element={
+            <ProtectedRoute cookie={cookie}>
+              <SocietyRegister cookie={cookie} />
+            </ProtectedRoute>
+          }
         />
 
         <Route
           path="/adminDashboard"
           element={
-            <AdminDashboard
-              cookie={cookie}
-              initialValuesForUpdateSociety={initialValuesForUpdateSociety}
-              setInitialValuesForUpdateSociety={
-                setInitialValuesForUpdateSociety
-              }
-            />
+            <ProtectedRoute cookie={cookie}>
+              <AdminDashboard
+                cookie={cookie}
+                initialValuesForUpdateSociety={initialValuesForUpdateSociety}
+                setInitialValuesForUpdateSociety={
+                  setInitialValuesForUpdateSociety
+                }
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/updateSociety"
           element={
-            <SocietyUpdate
-              cookie={cookie}
-              initialValuesForUpdateSociety={initialValuesForUpdateSociety}
-              setInitialValuesForUpdateSociety={
-                setInitialValuesForUpdateSociety
-              }
-            />
+            <ProtectedRoute cookie={cookie}>
+              <SocietyUpdate
+                cookie={cookie}
+                initialValuesForUpdateSociety={initialValuesForUpdateSociety}
+                setInitialValuesForUpdateSociety={
+                  setInitialValuesForUpdateSociety
+                }
+              />
+            </ProtectedRoute>
           }
         />
 
         <Route
           path="/searchSociety"
           element={
-            <SearchSociety
-              cookie={cookie}
-              setInitialValuesForUpdateSociety={
-                setInitialValuesForUpdateSociety
-              }
-            />
+            <ProtectedRoute cookie={cookie}>
+              <SearchSociety
+                cookie={cookie}
+                setInitialValuesForUpdateSociety={
+                  setInitialValuesForUpdateSociety
+                }
+              />
+            </ProtectedRoute>
           }
         />
       </Routes>

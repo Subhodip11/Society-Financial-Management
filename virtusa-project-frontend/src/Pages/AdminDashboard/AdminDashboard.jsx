@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AdminDashboard.module.css";
 import axios from "axios";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocietyDetailsContainer from "../../Components/SocietyDetialsConatainer/SocietyDetailsContainer";
 import Header from "../../Components/Header/Header";
 
@@ -46,44 +46,38 @@ const AdminDashboard = ({
   }, []);
 
   // console.log(typeof cookie.get("isAuthenticated"));
-  if (
-    cookie.get("isAuthenticated") === "false" ||
-    cookie.get("isAuthenticated") === undefined
-  ) {
-    return <Navigate replace to="/loginAdmin" />;
-  } else if (cookie.get("isAuthenticated") === "true") {
-    return (
-      <div>
-        <Header cookie={cookie} />
-        <header className={styles.header}>
-          <div className={styles.navbar}>
-            <div className={styles.addSociety}>
-              <Link to="/registerSociety" className={styles.btn}>
-                Add Society
-              </Link>
-              <Link to="/searchSociety" className={styles.btn}>
-                Search Society
-              </Link>
-            </div>
+
+  return (
+    <div>
+      <Header cookie={cookie} />
+      <header className={styles.header}>
+        <div className={styles.navbar}>
+          <div className={styles.addSociety}>
+            <Link to="/registerSociety" className={styles.btn}>
+              Add Society
+            </Link>
+            <Link to="/searchSociety" className={styles.btn}>
+              Search Society
+            </Link>
           </div>
-        </header>
-        <main>
-          {societyData &&
-            societyData.map((ele, index) => {
-              return (
-                <SocietyDetailsContainer
-                  key={index}
-                  ele={ele}
-                  setInitialValuesForUpdateSociety={
-                    setInitialValuesForUpdateSociety
-                  }
-                />
-              );
-            })}
-        </main>
-      </div>
-    );
-  }
+        </div>
+      </header>
+      <main>
+        {societyData &&
+          societyData.map((ele, index) => {
+            return (
+              <SocietyDetailsContainer
+                key={index}
+                ele={ele}
+                setInitialValuesForUpdateSociety={
+                  setInitialValuesForUpdateSociety
+                }
+              />
+            );
+          })}
+      </main>
+    </div>
+  );
 };
 
 export default AdminDashboard;
