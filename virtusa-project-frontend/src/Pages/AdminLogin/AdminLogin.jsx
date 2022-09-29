@@ -32,7 +32,7 @@ const AdminLogin = ({ cookie }) => {
         .post("http://localhost:1221/loginAdmin", values)
         .then((response) => {
           const authentic = response.data.isAuthenticated;
-          console.log(response.data);
+          console.log(response.data.data);
           if (authentic) {
             cookie.set("isAuthenticated", authentic, { path: "/" });
             cookie.set("jwt", response.data.token, { path: "/" });
@@ -62,7 +62,7 @@ const AdminLogin = ({ cookie }) => {
         </div>
         <form className={styles.fields} onSubmit={handleSubmit}>
           <InputContainer
-            type="password"
+            type="text"
             name={"username"}
             labelName={"Username"}
             inputContainerName={"Enter username"}
@@ -76,7 +76,7 @@ const AdminLogin = ({ cookie }) => {
             ) : null}
           </div>
           <InputContainer
-            type={"password"}
+            type={"text"}
             name={"password"}
             labelName={"Password"}
             inputContainerName={"Enter password"}
