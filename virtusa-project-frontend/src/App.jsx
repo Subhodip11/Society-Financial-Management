@@ -8,6 +8,7 @@ import Cookies from "universal-cookie";
 import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
 import SearchSociety from "./Pages/SearchSociety/SearchSociety";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -61,6 +62,15 @@ function App() {
                   setInitialValuesForUpdateSociety
                 }
               />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/forgotPassword"
+          element={
+            <ProtectedRoute cookie={cookie}>
+              <ForgotPassword cookie={cookie} />
             </ProtectedRoute>
           }
         />

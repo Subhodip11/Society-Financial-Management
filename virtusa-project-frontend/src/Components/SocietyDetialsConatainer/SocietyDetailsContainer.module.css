@@ -1,87 +1,12 @@
-.societyDetailsContainer {
-    width: 50%;
-    padding: 0.3rem 0.4rem;
-    background-color: rgb(241, 241, 241);
-    border-radius: 0.3rem;
-    margin: 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative;
-    animation-name: slideIn;
-    animation-duration: 2s;
-    transition: 400ms all ease-out;
+.rowDetails {
+    max-width: max-content;
 }
 
-.societyDetailsContainer:hover {
-    background-color: red;
-}
-
-.societyDetailsContainer:hover .tags {
-    background-color: black;
-}
-
-.societyDetailsContainer:hover .innerLabel {
-    background-position: left;
-}
-
-@keyframes changeColor {}
-
-.societyDetailsContainer:hover .innerText {
-    background-color: transparent;
-}
-
-.societyDetailsContainer:hover .updateBtn {
-    background-color: red;
-}
-
-@keyframes slideIn {
-    0% {
-        left: -800px;
-        opacity: 0;
-    }
-    100% {
-        left: 0;
-        opacity: 1;
-    }
-}
-
-.detailsContainer {
-    width: 70%;
-}
-
-.tags {
-    /* border: 1px solid brown; */
-    margin: 0.7rem 0;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    position: relative;
-}
-
-.innerLabel {
-    width: 35%;
-    padding: 0.2rem;
-    color: white;
-    /* border: 2px solid black; */
-    background-color: red;
-    background: linear-gradient(to left, red 50%, blue 50%) right;
-    background-size: 200%;
-    transition: .5s ease-out;
-}
-
-.innerText {
+.rowDetails td {
+    cursor: context-menu;
+    padding: 0.3rem 0;
     text-align: center;
-    vertical-align: bottom;
-    width: 40%;
-    background-color: blue;
-    color: white;
-}
-
-.updateBtnContainer {
-    width: 30%;
-    display: flex;
-    justify-content: end;
+    width: max-content;
 }
 
 .updateBtn {

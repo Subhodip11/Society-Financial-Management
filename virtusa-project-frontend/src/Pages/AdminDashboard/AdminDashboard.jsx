@@ -63,18 +63,31 @@ const AdminDashboard = ({
         </div>
       </header>
       <main>
-        {societyData &&
-          societyData.map((ele, index) => {
-            return (
-              <SocietyDetailsContainer
-                key={index}
-                ele={ele}
-                setInitialValuesForUpdateSociety={
-                  setInitialValuesForUpdateSociety
-                }
-              />
-            );
-          })}
+        <table className={styles.detailsTable}>
+          <thead>
+            <tr>
+              <th>Society ID</th>
+              <th>Society Name</th>
+              <th>City</th>
+              <th>Pincode</th>
+              <th>Update Details</th>
+            </tr>
+          </thead>
+          <tbody>
+            {societyData &&
+              societyData.map((ele, index) => {
+                return (
+                  <SocietyDetailsContainer
+                    key={index}
+                    ele={ele}
+                    setInitialValuesForUpdateSociety={
+                      setInitialValuesForUpdateSociety
+                    }
+                  />
+                );
+              })}
+          </tbody>
+        </table>
       </main>
     </div>
   );

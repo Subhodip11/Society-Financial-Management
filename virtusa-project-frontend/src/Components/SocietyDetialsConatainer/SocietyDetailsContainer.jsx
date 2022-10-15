@@ -10,36 +10,22 @@ const SocietyDetailsContainer = ({ ele, setInitialValuesForUpdateSociety }) => {
     navigate("/updateSociety");
   };
   return (
-    <section className={styles.societyDetailsContainer}>
-      <div className={styles.detailsContainer}>
-        <div className={styles.tags}>
-          <div className={styles.innerLabel}>SocietyID &#8594;</div>
-          <span className={styles.innerText}>{ele.societyID}</span>
-        </div>
-        <div className={styles.tags}>
-          <div className={styles.innerLabel}>Society Name &#8594;</div>
-          <span className={styles.innerText}>{ele.societyName}</span>
-        </div>
-        <div className={styles.tags}>
-          <div className={styles.innerLabel}>City &#8594;</div>
-          <span className={styles.innerText}>{ele.city}</span>
-        </div>
-        <div className={styles.tags}>
-          <div className={styles.innerLabel}>Pincode &#8594;</div>
-          <span className={styles.innerText}>{ele.pincode}</span>
-        </div>
-      </div>
-      <div className={styles.updateBtnContainer}>
+    <tr className={styles.rowDetails}>
+      <td>{ele.societyID}</td>
+      <td>{ele.societyName}</td>
+      <td>{ele.city}</td>
+      <td>{ele.pincode}</td>
+      <td>
         <button
           className={styles.updateBtn}
           onClick={(e) => {
             handleUpdate(e, ele);
           }}
         >
-          Update Society
+          Update
         </button>
-      </div>
-    </section>
+      </td>
+    </tr>
   );
 };
 

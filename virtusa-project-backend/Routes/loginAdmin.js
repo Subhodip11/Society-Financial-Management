@@ -15,7 +15,7 @@ app.post('/loginAdmin', async(req, res) => {
             bcrypt.compare(password, docPassword).then(async(response) => {
                     if (response && docUsername === username) {
                         await loginModel.findOneAndUpdate({ username: docUsername }, { $set: { checkLimit: 0 } }, { new: true, upsert: true })
-                        jwt.sign({ username: docUsername }, process.env.JWT_SECRET_KEY, { expiresIn: "20s" }, (err, token) => {
+                        jwt.sign({ username: docUsername }, process.env.JWT_SECRET_KEY, { expiresIn: "20h" }, (err, token) => {
                             if (err) {
                                 console.log("Error in jwt.sign", err)
                                 res.json({ isAuthenticated: false, token: "Error occured while authenticating" })
