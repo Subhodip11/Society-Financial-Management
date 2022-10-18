@@ -1,36 +1,28 @@
-const verifier = require('../middlewares/tokenVerifier');
-
 const router = require('express').Router();
-const nodemailer = require('nodemailer');
+//const nodemailer = require('nodemailer');
+//aabjlftyxkxoytli
+//account SID - AC90770d897ae519fc3b10b338bd24a5be
+//account auth token - 47c5a96df9af689cae18c963cd659ebb
 
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'dummyuser33214@gmail.com',
-        pass: 'aabjlftyxkxoytli'
-    },
-    port: 465,
-    host: 'smtp.gmail.com'
-})
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
 
-
-router.post('/forgotPassword', verifier, (req, res) => {
-    const { email } = req.body;
-
-    transporter.sendMail({
-        from: 'dummyuser33214@gmail.com',
-        to: email,
-        subject: 'OTP for changing password',
-        text: 'One time password for changing the admin password is 33514'
-    }, (err, response) => {
-        if (err) {
-            console.log(err)
-            res.json({ isAuthenticated: true, data: err.message })
-        } else {
-            console.log(response.response)
-            res.json({ isAuthenticated: true, data: response.response })
-        }
-    })
+router.post('/forgotPassword', (req, res) => {
+    const { mobileNumber } = req.body;
+    let otp = Math.floor(Math.random() * 10);
+    for (let i = 0; i < 5; i++)
+        otp = otp * 10 + Math.floor(Math.random() * 10)
+    client.messages
+        .create({
+            body: `Your OTP for changing password - ${otp}`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: mobileNumber
+        })
+        .then(message => {
+            console.log(message.sid)
+            res.json({ data: 'OTP generated Successfully', otp })
+        }).catch(err => console.log(err.message))
 })
 
 module.exports = router

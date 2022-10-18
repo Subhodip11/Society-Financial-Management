@@ -4,7 +4,7 @@ import { useFormik } from "formik";
 import axios from "axios";
 import styles from "./AdminLogin.module.css";
 import { validateOnChangeHandler } from "../../schemas/adminLogin";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const initialValues = {
   username: "",
@@ -89,6 +89,9 @@ const AdminLogin = ({ cookie }) => {
               <div className={styles.errorContainer}>{errors.password}</div>
             ) : null}
           </div>
+          <Link to="/forgotPassword">
+            <div className={styles.forgotPassword}>Forgot Password ?</div>
+          </Link>
           <button className={styles.loginBtn} type="submit">
             login
           </button>

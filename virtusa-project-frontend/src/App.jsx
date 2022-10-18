@@ -68,11 +68,7 @@ function App() {
 
         <Route
           path="/forgotPassword"
-          element={
-            <ProtectedRoute cookie={cookie}>
-              <ForgotPassword cookie={cookie} />
-            </ProtectedRoute>
-          }
+          element={<ForgotPassword cookie={cookie} />}
         />
 
         <Route
