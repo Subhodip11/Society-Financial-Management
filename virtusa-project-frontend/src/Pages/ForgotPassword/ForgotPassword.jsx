@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./ForgotPassword.module.css";
 import { useFormik } from "formik";
+import validateOnChange from "../../schemas/forgotPassword";
+import axios from "axios";
 
 const initialValues = {
   newPassword: "",
@@ -15,9 +17,27 @@ const ForgotPassword = () => {
     handleBlur,
     handleChange,
     handleReset,
+    touched,
   } = useFormik({
-    initialValues: initialValues,
+    validationSchema: validateOnChange,
+    initialValues,
     onSubmit: (values) => {
+      axios
+        .post(
+          "http://localhost:1221/forgotPassword",
+          { newPassword: values.newPassword },
+          {}
+        )
+        .then((response) => {
+          console.log(response.data.data);
+        })
+        .catch((err) => {
+          console.log(
+            "Error while updating password at backend side",
+            err.message
+          );
+        });
+
       handleReset();
     },
   });
@@ -35,7 +55,7 @@ const ForgotPassword = () => {
             onBlur={handleBlur}
           />
 
-          {touched && errors.newPassword ? (
+          {touched.newPassword && errors.newPassword ? (
             <div>{errors.newPassword}</div>
           ) : null}
         </div>
@@ -44,15 +64,17 @@ const ForgotPassword = () => {
             type="text"
             placeholder="Confirm Password"
             name="confirmPassword"
-            value={values.newPassword}
+            value={values.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
           />
 
-          {touched && errors.confirmPassword ? (
+          {touched.confirmPassword && errors.confirmPassword ? (
             <div>{errors.confirmPassword}</div>
           ) : null}
         </div>
+
+        <button type="submit">Change Password</button>
       </form>
     </div>
   );

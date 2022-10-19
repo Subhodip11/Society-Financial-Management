@@ -9,6 +9,7 @@ import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
 import SearchSociety from "./Pages/SearchSociety/SearchSociety";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import OTPVerification from "./Pages/OTPVerification/OTPVerification";
+import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -81,6 +82,8 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/forgotPassword" element={<ForgotPassword />} />
       </Routes>
     </Router>
   );

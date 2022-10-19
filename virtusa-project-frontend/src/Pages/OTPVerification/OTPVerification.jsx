@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./OTPVerification.module.css";
 
-const ForgotPassword = () => {
+const OTPVerification = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState(0);
   const [responseOTP, setResponseOTP] = useState("");
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     if (testMobileNumber.test(mobileNumber)) {
       axios
         .post(
-          "http://localhost:1221/forgotPassword",
+          "http://localhost:1221/otpVerification",
           { mobileNumber },
 
           { new: true, upsert: true }
@@ -81,4 +81,4 @@ const ForgotPassword = () => {
   );
 };
 
-export default ForgotPassword;
+export default OTPVerification;

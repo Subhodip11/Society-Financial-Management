@@ -5,7 +5,7 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
-router.post('/forgotPassword', (req, res) => {
+router.post('/otpVerification', (req, res) => {
     const { mobileNumber } = req.body;
     let otp = Math.floor(Math.random() * 10);
     for (let i = 0; i < 5; i++)
