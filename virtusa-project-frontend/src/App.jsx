@@ -22,6 +22,7 @@ function App() {
       city: "",
       pincode: "",
     });
+  const [forgotPassword, setForgotPassword] = useState(false);
 
   return (
     <Router>
@@ -67,8 +68,6 @@ function App() {
           }
         />
 
-        <Route path="/otpVerification" element={<OTPVerification />} />
-
         <Route
           path="/searchSociety"
           element={
@@ -83,7 +82,15 @@ function App() {
           }
         />
 
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
+        <Route
+          path="/otpVerification"
+          element={<OTPVerification setForgotPassword={setForgotPassword} />}
+        />
+
+        <Route
+          path="/forgotPassword"
+          element={<ForgotPassword forgotPassword={forgotPassword} />}
+        />
       </Routes>
     </Router>
   );

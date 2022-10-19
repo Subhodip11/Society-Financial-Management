@@ -17,7 +17,7 @@ router.post('/otpVerification', (req, res) => {
             to: mobileNumber
         })
         .then(message => {
-            console.log(message.sid)
+            console.log(message.errorMessage)
             res.json({ data: 'OTP generated Successfully', otp })
         }).catch(err => console.log(err.message))
 })

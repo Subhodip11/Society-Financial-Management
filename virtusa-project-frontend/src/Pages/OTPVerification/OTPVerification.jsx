@@ -1,12 +1,14 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./OTPVerification.module.css";
+import { useNavigate } from "react-router-dom";
 
-const OTPVerification = () => {
+const OTPVerification = ({ setForgotPassword }) => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [otp, setOtp] = useState(0);
   const [responseOTP, setResponseOTP] = useState("");
   const [responseMssg, setResponseMssg] = useState("");
+  const navigate = useNavigate();
 
   const handleGetOtp = (e) => {
     e.preventDefault();
@@ -36,7 +38,10 @@ const OTPVerification = () => {
     console.log(responseOTP, otp);
     if (responseOTP.toString() === otp.toString()) {
       setResponseMssg((mssg) => (mssg = "OTP verified Successfully"));
+      setForgotPassword(true);
+      navigate("/forgotPassword");
     } else {
+      setForgotPassword(false);
       setResponseMssg((mssg) => (mssg = "Invalid OTP"));
     }
   };
