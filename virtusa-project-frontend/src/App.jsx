@@ -8,7 +8,7 @@ import Cookies from "universal-cookie";
 import SocietyUpdate from "./Pages/SocietyUpdate/SocietyUpdate";
 import SearchSociety from "./Pages/SearchSociety/SearchSociety";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
-import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import OTPVerification from "./Pages/OTPVerification/OTPVerification";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -66,10 +66,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/forgotPassword"
-          element={<ForgotPassword cookie={cookie} />}
-        />
+        <Route path="/otpVerification" element={<OTPVerification />} />
 
         <Route
           path="/searchSociety"

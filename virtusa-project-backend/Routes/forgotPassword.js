@@ -1,8 +1,5 @@
 const router = require('express').Router();
 //const nodemailer = require('nodemailer');
-//aabjlftyxkxoytli
-//account SID - AC90770d897ae519fc3b10b338bd24a5be
-//account auth token - 47c5a96df9af689cae18c963cd659ebb
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;

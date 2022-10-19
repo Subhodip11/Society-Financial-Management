@@ -89,7 +89,7 @@ const AdminLogin = ({ cookie }) => {
               <div className={styles.errorContainer}>{errors.password}</div>
             ) : null}
           </div>
-          <Link to="/forgotPassword">
+          <Link to="/otpVerification">
             <div className={styles.forgotPassword}>Forgot Password ?</div>
           </Link>
           <button className={styles.loginBtn} type="submit">

@@ -1,80 +1,57 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./ForgotPassword.module.css";
+import { useFormik } from "formik";
 
-const ForgotPassword = ({ cookie }) => {
-  const [mobileNumber, setMobileNumber] = useState("");
-  const [otp, setOtp] = useState(0);
-  const [responseOTP, setResponseOTP] = useState("");
-  const [responseMssg, setResponseMssg] = useState("");
+const initialValues = {
+  newPassword: "",
+  confirmPassword: "",
+};
 
-  const handleGetOtp = (e) => {
-    e.preventDefault();
-    let testMobileNumber = /^[+]91[789]\d{9}$/;
-    console.log(testMobileNumber.test(mobileNumber));
-    if (testMobileNumber.test(mobileNumber)) {
-      axios
-        .post(
-          "http://localhost:1221/forgotPassword",
-          { mobileNumber },
-
-          { new: true, upsert: true }
-        )
-        .then((response) => {
-          console.log(response.data);
-          setResponseMssg((mssg) => (mssg = response.data.data));
-          setResponseOTP((responseOTP) => (responseOTP = response.data.otp));
-        })
-        .catch((err) => console.log(err));
-    } else {
-      setResponseMssg((mssg) => (mssg = "Invalid Mobile Number"));
-    }
-  };
-
-  const handleVerifyOtp = (e) => {
-    e.preventDefault();
-    console.log(responseOTP, otp);
-    if (responseOTP.toString() === otp.toString()) {
-      setResponseMssg((mssg) => (mssg = "OTP verified Successfully"));
-    } else {
-      setResponseMssg((mssg) => (mssg = "Invalid OTP"));
-    }
-  };
-
-  useEffect(() => {
-    setTimeout(() => {
-      setResponseMssg((mssg) => (mssg = ""));
-    }, 3000);
-  }, [responseMssg]);
+const ForgotPassword = () => {
+  const {
+    values,
+    errors,
+    handleSubmit,
+    handleBlur,
+    handleChange,
+    handleReset,
+  } = useFormik({
+    initialValues: initialValues,
+    onSubmit: (values) => {
+      handleReset();
+    },
+  });
 
   return (
     <div>
-      <div className={styles.submissionResults}>{responseMssg}</div>
-      <form onSubmit={handleGetOtp}>
-        <div className={styles.mobileNumber}>
-          <label htmlFor="email">Mobile Number</label>
+      <form onSubmit={handleSubmit}>
+        <div className={styles.newPassword}>
           <input
-            type="tel"
-            placeholder="Enter mobile number"
-            id="email"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber((num) => (num = e.target.value))}
+            type="text"
+            placeholder="Enter New Password"
+            name="newPassword"
+            value={values.newPassword}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          <button type="submit">Get OTP</button>
-        </div>
-      </form>
 
-      <form onSubmit={handleVerifyOtp}>
-        <div className={styles.otp}>
-          <label htmlFor="otp">OTP</label>
+          {touched && errors.newPassword ? (
+            <div>{errors.newPassword}</div>
+          ) : null}
+        </div>
+        <div className={styles.confirmPassword}>
           <input
-            type="number"
-            placeholder="Enter OTP"
-            id="otp"
-            value={otp}
-            onChange={(e) => setOtp((otp) => (otp = e.target.value))}
+            type="text"
+            placeholder="Confirm Password"
+            name="confirmPassword"
+            value={values.newPassword}
+            onChange={handleChange}
+            onBlur={handleBlur}
           />
-          <button type="submit">Verify OTP</button>
+
+          {touched && errors.confirmPassword ? (
+            <div>{errors.confirmPassword}</div>
+          ) : null}
         </div>
       </form>
     </div>
