@@ -10,6 +10,7 @@ import SearchSociety from "./Pages/SearchSociety/SearchSociety";
 import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
 import OTPVerification from "./Pages/OTPVerification/OTPVerification";
 import ForgotPassword from "./Pages/ForgotPassword/ForgotPassword";
+import { EmailVerification } from "./Pages/EmailVerification/EmailVerification";
 
 //initialize cookies for storing tokens
 const cookie = new Cookies();
@@ -91,6 +92,8 @@ function App() {
           path="/forgotPassword"
           element={<ForgotPassword forgotPassword={forgotPassword} />}
         />
+
+        <Route path="/emailVerification" element={<EmailVerification />} />
       </Routes>
     </Router>
   );

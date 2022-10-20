@@ -7,7 +7,7 @@ const client = require('twilio')(accountSid, authToken);
 
 router.post('/otpVerification', (req, res) => {
     const { mobileNumber } = req.body;
-    let otp = Math.floor(Math.random() * 10);
+    let otp = Math.floor(Math.random() * 9) + 1;
     for (let i = 0; i < 5; i++)
         otp = otp * 10 + Math.floor(Math.random() * 10)
     client.messages
@@ -17,7 +17,7 @@ router.post('/otpVerification', (req, res) => {
             to: mobileNumber
         })
         .then(message => {
-            console.log(message.errorMessage)
+            console.log(message.sid)
             res.json({ data: 'OTP generated Successfully', otp })
         }).catch(err => console.log(err.message))
 })

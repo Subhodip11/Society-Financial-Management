@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import styles from "./OTPVerification.module.css";
 import { useNavigate } from "react-router-dom";
+import Header from "../../Components/Header/Header";
 
 const OTPVerification = ({ setForgotPassword }) => {
   const [mobileNumber, setMobileNumber] = useState("");
@@ -53,35 +54,37 @@ const OTPVerification = ({ setForgotPassword }) => {
   }, [responseMssg]);
 
   return (
-    <div>
+    <div className={styles.parentContainer}>
       <div className={styles.submissionResults}>{responseMssg}</div>
-      <form onSubmit={handleGetOtp}>
-        <div className={styles.mobileNumber}>
-          <label htmlFor="email">Mobile Number</label>
-          <input
-            type="tel"
-            placeholder="Enter mobile number"
-            id="email"
-            value={mobileNumber}
-            onChange={(e) => setMobileNumber((num) => (num = e.target.value))}
-          />
-          <button type="submit">Get OTP</button>
-        </div>
-      </form>
+      <div className={styles.verificationContainer}>
+        <form className={styles.mobileForm} onSubmit={handleGetOtp}>
+          <div className={styles.mobileNumber}>
+            <label htmlFor="email">Mobile Number</label>
+            <input
+              type="tel"
+              placeholder="Enter mobile number"
+              id="email"
+              value={mobileNumber}
+              onChange={(e) => setMobileNumber((num) => (num = e.target.value))}
+            />
+            <button type="submit">Get OTP</button>
+          </div>
+        </form>
 
-      <form onSubmit={handleVerifyOtp}>
-        <div className={styles.otp}>
-          <label htmlFor="otp">OTP</label>
-          <input
-            type="number"
-            placeholder="Enter OTP"
-            id="otp"
-            value={otp}
-            onChange={(e) => setOtp((otp) => (otp = e.target.value))}
-          />
-          <button type="submit">Verify OTP</button>
-        </div>
-      </form>
+        <form className={styles.otpVerifyForm} onSubmit={handleVerifyOtp}>
+          <div className={styles.otp}>
+            <label htmlFor="otp">OTP</label>
+            <input
+              type="number"
+              placeholder="Enter OTP"
+              id="otp"
+              value={otp}
+              onChange={(e) => setOtp((otp) => (otp = e.target.value))}
+            />
+            <button type="submit">Verify OTP</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

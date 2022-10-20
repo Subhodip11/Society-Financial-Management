@@ -43,7 +43,7 @@ const ForgotPassword = ({ forgotPassword }) => {
     },
   });
   if (!forgotPassword) {
-    return <Navigate to="/forgotPassword" />;
+    return <Navigate to="/otpVerification" />;
   } else {
     return (
       <div>
